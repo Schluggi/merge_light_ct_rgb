@@ -17,8 +17,7 @@ from .const import (
     CURRENT_LIGHT_RGB,
     CURRENT_LIGHT_CT,
     CONF_LIGHTS_CT,
-    CONF_LIGHTS_RGB,
-    PLATFORM_NAME
+    CONF_LIGHTS_RGB
 )
 
 
@@ -26,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 PLATFORM_SCHEMA = vol.Schema({
-    vol.Required(CONF_PLATFORM): PLATFORM_NAME,
+    vol.Required(CONF_PLATFORM): "merge_light_ct_rgb",
     vol.Optional(CONF_NAME, default="Merge Lighting"): cv.string,
     vol.Optional(CONF_LIGHTS_CT): cv.entity_id,
     vol.Optional(CONF_LIGHTS_RGB): cv.entity_id
@@ -50,7 +49,7 @@ class LightMerge(LightEntity, RestoreEntity):
     """Representation of a Merge Light."""
     def __init__(self, hass, name, lights_ct, lights_rgb):
         """Initialize the Merge Light."""
-        entity_name = slugify("{} {}".format(PLATFORM_NAME, name))
+        entity_name = slugify(name)
         self.hass = hass
         self._name = name
         self._entity_id = "light." + entity_name
